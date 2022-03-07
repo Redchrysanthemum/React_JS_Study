@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React_JS</title>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+    function SaveBtn({ banana, fontSize, show, hi }) {
+      console.log(banana, "i'm re-render");
+      return (
+        <button
+          onClick={hi}
+          style={{
+            backgroundColor: "tomato",
+            color: "white",
+            padding: "10px 20px",
+            border: 0,
+            borderRadius: 10,
+            fontSize, //css 에도 적용 가능
+          }}
+        >
+          {banana}
+        </button>
+      );
+    }
+    /* props = 부모 컴포넌트로부터 자식 컴포넌트에게 데이터를 전송하는 방식.
+    부모에 props를 사용하면 자식 컴포넌트(함수)의 인자로 객체가 들어가게 됨.
+    하나의 버튼을 만들어서 props를 이용해 버튼의 스타일을 관리해서 재사용 할 수 있게됨.
+    */
+    SaveBtn.propTypes = {
+      banana: PropTypes.string.isRequired,
+      fontSize: PropTypes.number,
+    };
+    /* const MemorizedBtn = React.memo(SaveBtn); */
+    /* 
+    const 함수명 = React.memo(선택자); = 만약 선택된 props가 변경되지 않는다면 다시 컴포넌트 할 필요가 없게함.
+   */
+    function App() {
+      const [value, setValue] = React.useState("Save Change");
+      const changeValue = () => setValue("Revert Changes");
+      return (
+        <div>
+          <SaveBtn banana={value} show hi={changeValue} />
+          <SaveBtn fontSize={14} banana={"Continue"} />
+        </div>
+        // SaveBtn 의 인자값에 objt를 넣을 수 있다
+        // props 에 이벤트리스너 함수를 넣어도 그것은 이벤트리스너가 아니라 prop일 뿐이다
+      );
+    }
+    const root = document.querySelector("#root");
+    ReactDOM.render(<App />, root);
+  </script>
+</html>
