@@ -37,9 +37,9 @@ function App() {
             <div key={movies.id}>
               <h2>{argument.title}</h2>
               <p>{argument.summary}</p>
-              {movies.hasOwnProperty("genres") ? (
+              {argument.hasOwnProperty("genres") ? (
                 <ul>
-                  {movies.genres.map((g) => (
+                  {argument.genres.map((g) => (
                     <li key={g}>{g}</li>
                   ))}
                 </ul>
